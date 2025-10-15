@@ -16,15 +16,13 @@ import {
   groupByMonth,
 } from "./lib/movements";
 
-console.log(seedMovements);
-
 const totalIncome = getTotalIncome(seedMovements);
 const totalExpense = getTotalExpense(seedMovements);
 const balance = getBalance(seedMovements);
 const filtroMes = filterByMonth(seedMovements, "2025", "01");
 const filtroCategoria = filterByCategory(seedMovements, "Rent");
 const buscarMovimiento = searchMovements(seedMovements, "Medicina");
-const totalesMensuales = getMonthlyTotals(seedMovements, "2025", "01");
+const totalesMensuales = getMonthlyTotals(seedMovements, "2025", "07");
 const ahorrosMensuales = getMonthlySavings(seedMovements, "2025", "01");
 const totalesCategorias = getCategoryTotals(seedMovements, {
   tipo: "expense",
@@ -33,6 +31,8 @@ const totalesCategorias = getCategoryTotals(seedMovements, {
 });
 const topCategorias = getTopSpendingCategories(seedMovements);
 const diccionarioMeses = groupByMonth(seedMovements);
+console.log(diccionarioMeses);
+
 function App() {
   localStorage.setItem("movements", JSON.stringify(seedMovements));
 

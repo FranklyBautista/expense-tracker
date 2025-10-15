@@ -1,4 +1,6 @@
+import seedMovements from "@/data/seed";
 import type { Movement } from "@/types/movement";
+import type { Mensual } from "@/types/movement";
 
 export function getTotalIncome(data: Movement[]) {
   let totalIncome: number = 0;
@@ -27,15 +29,29 @@ export function getBalance(data: Movement[]) {
   return getTotalIncome(data) - getTotalExpense(data);
 }
 
-export function filterByMonth(data: Movement[], year: string, month: string) {
-  const data_filtrada = data.filter((p) => {
-    const anio = p.date.slice(0, 4);
-    const mes = p.date.slice(5, 7);
+export function getSavingsRate(data: Movement[]) {
+  let tasa =
+    ((getTotalIncome(data) - getTotalExpense(data)) /
+      getTotalIncome(seedMovements)) *
+    100;
 
-    return year === anio && mes === month;
-  });
+  tasa = Math.floor(tasa * 100) / 100;
+  return tasa;
+}
 
-  return data_filtrada;
+export function filterByMonth(data: Movement[], year: string, month?: string) {
+  if (month) {
+    const data_filtrada = data.filter((p) => {
+      const anio = p.date.slice(0, 4);
+      const mes = p.date.slice(5, 7);
+
+      return year === anio && mes === month;
+    });
+
+    return data_filtrada;
+  } else {
+    return data;
+  }
 }
 
 export function filterByCategory(data: Movement[], category: string) {
@@ -58,31 +74,88 @@ export function searchMovements(data: Movement[], keyword: string) {
 
 // FILTROS O MOVIMIENTOS POR MES
 
+export function getMonthName(month: string | number): string {
+  const meses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
+  const index = Number(month) - 1;
+
+  if (index < 0 || index > 11 || isNaN(index)) return "Mes inválido";
+
+  return meses[index];
+}
+
 export function getMonthlyTotals(
   data: Movement[],
   year: string,
-  month: string
-) {
-  const dataMensual = filterByMonth(data, year, month);
+  month?: string
+): Mensual[] {
+  if (month) {
+    const dataMensual = filterByMonth(data, year, month);
 
-  type mensual = { income: number; expense: number; balance: number };
-  let incomeTotal: number = 0;
-  let expenseTotal: number = 0;
+    let incomeTotal: number = 0;
+    let expenseTotal: number = 0;
 
-  dataMensual.forEach((p) => {
-    if (p.type === "income") incomeTotal += p.amount;
-    else if (p.type === "expense") expenseTotal += p.amount;
+    dataMensual.forEach((p) => {
+      if (p.type === "income") incomeTotal += p.amount;
+      else if (p.type === "expense") expenseTotal += p.amount;
+    });
+
+    let balanceTotal = incomeTotal - expenseTotal;
+
+    const data_mensual: Mensual = {
+      name: getMonthName(month),
+      income: incomeTotal,
+      expense: expenseTotal,
+      balance: balanceTotal,
+    };
+
+    return [data_mensual];
+  }
+
+  const resultados: Mensual[] = [];
+
+  const meses = Array.from(
+    new Set(
+      data
+        .filter((p) => p.date.slice(0, 4) === year)
+        .map((p) => p.date.slice(5, 7))
+    )
+  );
+
+  meses.forEach((m) => {
+    const dataMensual = filterByMonth(data, year, m);
+    let incomeTotal = 0;
+    let expenseTotal = 0;
+
+    dataMensual.forEach((p) => {
+      if (p.type === "income") incomeTotal += p.amount;
+      else if (p.type === "expense") expenseTotal += p.amount;
+    });
+
+    const balanceTotal = incomeTotal - expenseTotal;
+
+    resultados.push({
+      name: getMonthName(m),
+      income: incomeTotal,
+      expense: expenseTotal,
+      balance: balanceTotal,
+    });
   });
 
-  let balanceTotal = incomeTotal - expenseTotal;
-
-  const data_mensual: mensual = {
-    income: incomeTotal,
-    expense: expenseTotal,
-    balance: balanceTotal,
-  };
-
-  return data_mensual;
+  return resultados;
 }
 
 export function getMonthlySavings(

@@ -1,6 +1,12 @@
 // src/types/movement.ts
 export type MovementType = "income" | "expense";
 export type Account = "Bank" | "Card" | "Cash";
+export type Mensual = {
+  name: string;
+  income: number;
+  expense: number;
+  balance: number;
+};
 
 export interface Movement {
   id: string;
