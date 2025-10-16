@@ -1,12 +1,14 @@
-import React from "react";
-
 import { Card, CardContent, CardHeader, CardTitle } from "../../card";
-import Graphic from "./AreaChart";
-import Example from "./SimpleBarChart";
+import GraficoSencillo from "./SimpleBarChart";
 
-type Props = { title: string; PValue: number; porcentaje?: boolean };
+type Props = {
+  title: string;
+  PValue: number;
+  porcentaje?: boolean;
+  valorGrafico?: string;
+};
 
-function KpiCard({ title, PValue, porcentaje }: Props) {
+function KpiCard({ title, PValue, porcentaje, valorGrafico }: Props) {
   return (
     <Card className="p-4 bg-white shadow-lg rounded-xl hover:shadow-xl transition w-full h-full">
       <CardHeader>
@@ -22,7 +24,7 @@ function KpiCard({ title, PValue, porcentaje }: Props) {
         </span>
         <span className="text-green-600 text-lg">12% MoM</span> <br />
         <div className="w-full h-56 md:h-64 lg:h-20 min-w-0">
-          <Example />
+          <GraficoSencillo valor={valorGrafico ?? ""} />
         </div>
       </CardContent>
     </Card>

@@ -1,4 +1,8 @@
+import { useEffect } from "react";
 import Page from "./app/dashboard/page";
+import HistoryPage from "./app/dashboard/historia/page";
+import DashboardHome from "./app/dashboard/home/page";
+import GraphicsPage from "./app/dashboard/graficos/page";
 
 import seedMovements from "./data/seed";
 
@@ -15,6 +19,7 @@ import {
   getTopSpendingCategories,
   groupByMonth,
 } from "./lib/movements";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 const totalIncome = getTotalIncome(seedMovements);
 const totalExpense = getTotalExpense(seedMovements);
@@ -31,15 +36,22 @@ const totalesCategorias = getCategoryTotals(seedMovements, {
 });
 const topCategorias = getTopSpendingCategories(seedMovements);
 const diccionarioMeses = groupByMonth(seedMovements);
-console.log(diccionarioMeses);
 
 function App() {
-  localStorage.setItem("movements", JSON.stringify(seedMovements));
+  useEffect(() => {
+    localStorage.setItem("movements", JSON.stringify(seedMovements));
+  }, []);
 
   return (
-    <>
-      <Page />
-    </>
+    <Routes>
+      <Route path="/" element={<Navigate to="/app/dashboard" replace />} />
+
+      <Route path="/app/dashboard" element={<Page />}>
+        <Route index element={<DashboardHome />} />
+        <Route path="historia" element={<HistoryPage />} />
+        <Route path="graficos" element={<GraphicsPage />} />
+      </Route>
+    </Routes>
   );
 }
 
