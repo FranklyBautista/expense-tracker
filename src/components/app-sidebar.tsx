@@ -50,8 +50,8 @@ const data = {
           url: "/app/dashboard/graficos",
         },
         {
-          title: "Settings",
-          url: "#",
+          title: "Datos",
+          url: "/app/dashboard/payments",
         },
       ],
     },

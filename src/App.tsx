@@ -3,6 +3,7 @@ import Page from "./app/dashboard/page";
 import HistoryPage from "./app/dashboard/historia/page";
 import DashboardHome from "./app/dashboard/home/page";
 import GraphicsPage from "./app/dashboard/graficos/page";
+import DemoPage from "./app/dashboard/payments/page";
 
 import seedMovements from "./data/seed";
 
@@ -18,10 +19,11 @@ import {
   getCategoryTotals,
   getTopSpendingCategories,
   groupByMonth,
+  getDataTable,
 } from "./lib/movements";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-const totalIncome = getTotalIncome(seedMovements);
+/* const totalIncome = getTotalIncome(seedMovements);
 const totalExpense = getTotalExpense(seedMovements);
 const balance = getBalance(seedMovements);
 const filtroMes = filterByMonth(seedMovements, "2025", "01");
@@ -35,7 +37,9 @@ const totalesCategorias = getCategoryTotals(seedMovements, {
   month: "01",
 });
 const topCategorias = getTopSpendingCategories(seedMovements);
-const diccionarioMeses = groupByMonth(seedMovements);
+const diccionarioMeses = groupByMonth(seedMovements); */
+
+const tabla = getDataTable(seedMovements);
 
 function App() {
   useEffect(() => {
@@ -50,6 +54,7 @@ function App() {
         <Route index element={<DashboardHome />} />
         <Route path="historia" element={<HistoryPage />} />
         <Route path="graficos" element={<GraphicsPage />} />
+        <Route path="payments" element={<DemoPage />} />
       </Route>
     </Routes>
   );

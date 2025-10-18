@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/carousel";
 
 import Graphic from "@/components/ui/common/kpi/AreaChart";
+import DemoPage from "../payments/page";
 
 type Props = {};
 
@@ -62,7 +63,7 @@ function DashboardHome({}: Props) {
       </div>
 
       <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min">
-        <Graphic />
+        <DemoPage />
       </div>
     </>
   );

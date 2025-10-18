@@ -215,3 +215,23 @@ export function groupByMonth(data: Movement[]) {
 
   return diccionario;
 }
+
+import { type Payment } from "@/app/dashboard/payments/columns";
+export function getDataTable(data: Movement[]) {
+  let datos: Payment[] = [];
+
+  data.forEach((p) => {
+    datos.push({
+      id: p.id,
+      date: p.date,
+      category: p.category,
+      tipo: p.type,
+      amount: p.amount,
+      metodo: p.account,
+      description: p.description,
+      status: "processing",
+    });
+  });
+
+  return datos;
+}
