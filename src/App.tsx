@@ -4,6 +4,7 @@ import HistoryPage from "./app/dashboard/historia/page";
 import DashboardHome from "./app/dashboard/home/page";
 import GraphicsPage from "./app/dashboard/graficos/page";
 import DemoPage from "./app/dashboard/payments/page";
+import { ThemeProvider } from "./components/theme-provider";
 
 import seedMovements from "./data/seed";
 
@@ -47,16 +48,18 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/app/dashboard" replace />} />
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <Routes>
+        <Route path="/" element={<Navigate to="/app/dashboard" replace />} />
 
-      <Route path="/app/dashboard" element={<Page />}>
-        <Route index element={<DashboardHome />} />
-        <Route path="historia" element={<HistoryPage />} />
-        <Route path="graficos" element={<GraphicsPage />} />
-        <Route path="payments" element={<DemoPage />} />
-      </Route>
-    </Routes>
+        <Route path="/app/dashboard" element={<Page />}>
+          <Route index element={<DashboardHome />} />
+          <Route path="historia" element={<HistoryPage />} />
+          <Route path="graficos" element={<GraphicsPage />} />
+          <Route path="payments" element={<DemoPage />} />
+        </Route>
+      </Routes>
+    </ThemeProvider>
   );
 }
 
