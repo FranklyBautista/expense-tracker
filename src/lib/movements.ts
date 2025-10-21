@@ -76,18 +76,18 @@ export function searchMovements(data: Movement[], keyword: string) {
 
 export function getMonthName(month: string | number): string {
   const meses = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
+    "En",
+    "Feb",
+    "Mzo",
+    "Abr",
+    "My",
+    "Jun",
+    "Jul",
+    "Agt",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dic",
   ];
 
   const index = Number(month) - 1;

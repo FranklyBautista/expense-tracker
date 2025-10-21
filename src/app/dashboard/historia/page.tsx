@@ -1,5 +1,4 @@
 type Props = {};
-import { ModeToggle } from "@/components/mode-toggle";
 
 function HistoryPage({}: Props) {
   return (
