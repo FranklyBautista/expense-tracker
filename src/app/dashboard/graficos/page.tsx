@@ -1,20 +1,18 @@
+import React from "react";
+
+import { DropdownCategory } from "./DropdownCategory";
 import GraphicBar from "@/components/ui/common/kpi/AreaChart";
-import { DropdownGraphic } from "./checkboxGraphic";
-import { ActivosProvider } from "./ActivosContext";
+import { CategoryProvider } from "./ThemeContext";
 
 type Props = {};
 
 function GraphicsPage({}: Props) {
   return (
     <>
-      <ActivosProvider>
-        <div className="w-full max-w-[180px] flex flex-row justify-between items-center">
-          <DropdownGraphic />
-          <DropdownGraphic />
-        </div>
-
+      <CategoryProvider>
+        <DropdownCategory />
         <GraphicBar />
-      </ActivosProvider>
+      </CategoryProvider>
     </>
   );
 }

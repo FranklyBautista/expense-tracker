@@ -10,14 +10,16 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { useActivos } from "@/app/dashboard/graficos/ActivosContext";
-
 import { getMonthlyTotals } from "@/lib/movements";
 import seedMovements from "@/data/seed";
+import {
+  type Categoria,
+  useCategoria,
+  categorias,
+} from "@/app/dashboard/graficos/ThemeContext";
 
 const GraphicBar = () => {
-  const activos = useActivos();
-
+  const { selectedCategoria, setSelectedCategoria } = useCategoria();
   const datos = getMonthlyTotals(seedMovements, "2025");
 
   function getRandomColor(): string {
@@ -51,14 +53,14 @@ const GraphicBar = () => {
           <YAxis width={50} />
           <Tooltip />
           <Legend />
-          {activos.map((item) => (
+
+          {selectedCategoria.map((c) => (
             <Bar
-              dataKey={item}
+              dataKey={c}
               fill={getRandomColor()}
               activeBar={<Rectangle fill="pink" stroke="blue" />}
             />
           ))}
-          ;
         </BarChart>
       </ResponsiveContainer>
     </div>
